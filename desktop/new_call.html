@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый вызов</title>
+
+    <script src="rsc/js/jquery-2.1.4.js"></script>
+    <link type="text/css" rel="stylesheet" href="rsc/css/bootstrap.css"/>
+    <script src="rsc/js/bootstrap.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="rsc/css/main.css"/>
+    <script src="rsc/js/main.js"></script>
+    <script src="rsc/js/new_call.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a id="dc_link" href="index.html">Диспетчерская</a></li>
+                    <li class="active"><a href="#">Новый вызов</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-xs-10 col-xs-push-1">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Новый вызов
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastname" class="col-sm-4 control-label">Фамилия</label>
+                                    <div class="col-sm-8">
+                                        <input id="lastname" type="text" class="form-control" placeholder="Фамилия">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="firstname" class="col-sm-4 control-label">Имя</label>
+                                    <div class="col-sm-8">
+                                        <input id="firstname" type="text" class="form-control" placeholder="Имя">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fathername" class="col-sm-4 control-label">Отчество</label>
+                                    <div class="col-sm-8">
+                                        <input id="fathername" type="text" class="form-control" placeholder="Отчество">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phoneNumber" class="col-sm-4 control-label">Телефон</label>
+                                    <div class="col-sm-8">
+                                        <input id="phoneNumber" type="number" class="form-control" placeholder="Телефон">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address" class="col-sm-4 control-label">Адрес</label>
+                                    <div class="col-sm-8">
+                                        <input id="address" type="text" class="form-control" placeholder="Адрес" autofocus>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reason" class="col-sm-4 control-label">Причина</label>
+                                    <div class="col-sm-8">
+                                        <input id="reason" type="text" class="form-control" placeholder="Причина">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="comment" class="col-sm-2 control-label">Комментарии</label>
+                                    <div class="col-sm-10">
+                                        <textarea id="comment" class="form-control" placeholder="Комментарии" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-push-5">
+                                <div id="btnRegister" class="btn btn-primary btn-block" onclick="nc.onclickBtnRegister()">Зарегистрировать</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

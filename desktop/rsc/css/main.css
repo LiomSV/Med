@@ -1,0 +1,34 @@
+/* override Bootstrap styles */
+
+/* end of override Bootstrap styles */
+
+.main-row {
+    margin: 10px 0;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    background-color: #EEE;
+}
+
+.hover-red:hover {
+    color: red;
+}
+
+.hover-blue:hover {
+    color: blue;
+}
+
+.scroll-y {
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.auto-height {
+    min-height: 250px;
+}
+
+.nopadding {
+    padding: 0;
+}

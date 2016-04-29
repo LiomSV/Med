@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="med-server:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="med-server-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="med-server:war exploded" />
+    </root>
+  </artifact>
+</component>
