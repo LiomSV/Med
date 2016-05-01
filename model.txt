@@ -1,0 +1,69 @@
+Server: {
+    REST: {
+        call?id
+        call/add
+        call/add_passing
+        call/update
+        call/remove?id
+        call/restore?id
+        call/list?type
+        сall/history?offset&limit
+
+        crew/add
+        crew/remove?id
+        crew/list
+        crew/assign_call
+        crew/register
+        crew/check
+        crew/update_status
+    }
+
+    Models: {
+        call: {
+            id                          int
+            status                      ENUM
+            initAddress                 String
+            address                     String
+            location                    LatLng
+            firstname                   String
+            fathername                  String
+            lastname                    String
+            sex                         ENUM
+            reason                      String {object Reason}
+            comment                     String
+            type                        ENUM
+            receivedAt                  LocalDateTime
+            movedOutAt                  LocalDateTime
+            arrivedAt                   LocalDateTime
+            transportationStartedAt     LocalDateTime
+            finishedAt                  LocalDateTime
+            assignedCrew                object Crew
+        }
+
+        reason: {
+            id      int
+            type    ENUM
+            name    String
+        }
+
+        crew: {
+            id              int
+            status          ENUM
+            driver          String
+            members         String[]
+            carNumber       String
+            location        LatLng
+            assignedCall    object Call
+        }
+    }
+}
+
+Desktop: {
+
+}
+
+Mobile: {
+
+}
+
+
