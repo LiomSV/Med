@@ -1,21 +1,21 @@
 Server: {
     REST: {
-        call?id
-        call/add
-        call/add_passing
-        call/update
-        call/remove?id
-        call/restore?id
-        call/list?type
-        сall/history?offset&limit
+        call?id                         GET
+        call/add                        POST
+        call/add_passing                POST
+        call/update                     POST
+        call/remove?id                  POST
+        call/restore?id                 POST
+        call/list?[type]                GET
+        сall/history?[offset]&[limit]   GET
 
-        crew/add
-        crew/remove?id
-        crew/list
-        crew/assign_call
-        crew/register
-        crew/check
-        crew/update_status
+        crew/add                        POST
+        crew/remove?id                  POST
+        crew/list                       GET
+        crew/assign_call                POST
+        crew/register                   POST
+        crew/check                      POST
+        crew/update_status              POST
     }
 
     Models: {
