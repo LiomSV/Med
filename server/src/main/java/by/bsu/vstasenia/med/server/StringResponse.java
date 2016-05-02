@@ -1,4 +1,4 @@
-package by.bsu.vstasenia;
+package by.bsu.vstasenia.med.server;
 
 /**
  *  Created by vstasenia on 4/20/16.

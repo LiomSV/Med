@@ -3,16 +3,18 @@ Server: {
         call?id                         GET
         call/add                        POST
         call/add_passing                POST
+        call/assign                     POST
         call/update                     POST
         call/remove?id                  POST
         call/restore?id                 POST
         call/list?[type]                GET
         сall/history?[offset]&[limit]   GET
 
+
         crew/add                        POST
         crew/remove?id                  POST
         crew/list                       GET
-        crew/assign_call                POST
+        // crew/assign_call                POST
         crew/register                   POST
         crew/check                      POST
         crew/update_status              POST
@@ -25,6 +27,7 @@ Server: {
             initAddress                 String
             address                     String
             location                    LatLng
+            phoneNumber                 String
             firstname                   String
             fathername                  String
             lastname                    String
@@ -49,6 +52,7 @@ Server: {
         crew: {
             id              int
             status          ENUM
+            type            ENUM
             driver          String
             members         String[]
             carNumber       String

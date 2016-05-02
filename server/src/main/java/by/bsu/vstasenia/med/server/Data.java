@@ -1,4 +1,4 @@
-package by.bsu.vstasenia;
+package by.bsu.vstasenia.med.server;
 
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
