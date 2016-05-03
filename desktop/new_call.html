@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>Новый вызов</title>
 
-    <script src="rsc/js/jquery-2.1.4.js"></script>
-    <link type="text/css" rel="stylesheet" href="rsc/css/bootstrap.css"/>
-    <script src="rsc/js/bootstrap.js"></script>
+    <script src="rsc/3dparty/jquery-2.1.4.js"></script>
+    <link type="text/css" rel="stylesheet" href="rsc/3dparty/bootstrap.css"/>
+    <script src="rsc/3dparty/bootstrap.js"></script>
 
     <link type="text/css" rel="stylesheet" href="rsc/css/main.css"/>
+    <script src="rsc/js/conf.js"></script>
     <script src="rsc/js/main.js"></script>
     <script src="rsc/js/new_call.js"></script>
 </head>
@@ -20,6 +21,9 @@
                 <ul class="nav navbar-nav">
                     <li><a id="dc_link" href="index.html">Диспетчерская</a></li>
                     <li class="active"><a href="#">Новый вызов</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="new_crew.html">Добавить бригаду</a></li>
                 </ul>
             </div>
         </div>
@@ -38,7 +42,7 @@
                                 <div class="form-group">
                                     <label for="lastname" class="col-sm-4 control-label">Фамилия</label>
                                     <div class="col-sm-8">
-                                        <input id="lastname" type="text" class="form-control" placeholder="Фамилия">
+                                        <input id="lastname" type="text" class="form-control" name="lastname" placeholder="Фамилия">
                                     </div>
                                 </div>
                                 <div class="form-group">

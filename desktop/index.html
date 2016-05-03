@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>Диспетчерская</title>
 
-    <link type="text/css" rel="stylesheet" href="rsc/css/bootstrap.css"/>
-    <script src="rsc/js/bootstrap.js"></script>
-    <script src="rsc/js/jquery-2.1.4.js"></script>
+    <link type="text/css" rel="stylesheet" href="rsc/3dparty/bootstrap.css"/>
+    <script src="rsc/3dparty/bootstrap.js"></script>
+    <script src="rsc/3dparty/jquery-2.1.4.js"></script>
 
-<!--    <script src="rsc/js/googlemap.js"></script> -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_Sc0dGO6oDWND1FwMMI1RTDexCq8ULbk"></script>
 
     <link type="text/css" rel="stylesheet" href="rsc/css/main.css"/>
+    <script src="rsc/js/conf.js"></script>
     <script src="rsc/js/main.js"></script>
     <script src="rsc/js/index.js"></script>
 
@@ -25,6 +25,9 @@
                     <li class="active"><a href="#">Диспетчерская</a></li>
                     <li><a href="new_call.html">Новый вызов</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="new_crew.html">Добавить бригаду</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -35,39 +38,29 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            Все вызовы: <span id="calls_count">x</span>
+                            Всего: <span id="calls_count">x</span>
                         </div>
                         <div class="col-xs-3 text-center">
-                            Неотложные: x
+                            Неотложные: <span id="urgent_count">x</span>
                         </div>
                         <div class="col-xs-3 text-center">
-                            Срочные: x
+                            Срочные: <span id="immediate_count">x</span>
                         </div>
                         <div class="col-xs-3 text-center">
-                            Экстренные: x
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-1">
-                            <b>№</b>
-                        </div>
-                        <div class="col-xs-3">
-                            <b>ФИО</b>
-                        </div>
-                        <div class="col-xs-4">
-                            <b>Адрес</b>
-                        </div>
-                        <div class="col-xs-2">
-                            <b>Причина</b>
-                        </div>
-                        <div class="col-xs-2">
+                            Экстренные: <span id="emergent_count">x</span>
                         </div>
                     </div>
                 </div>
                 <div class="panel-body scroll-y nopadding">
-                    <div id="calls_table" class="row"></div>
+                    <table id="calls_table" class="table">
+                        <tr>
+                            <th>№</th>
+                            <th>ФИО</th>
+                            <th>Адрес</th>
+                            <th>Причина</th>
+                            <th></th>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -75,42 +68,12 @@
                     Бригады
                 </div>
                 <div class="panel-body scroll-y nopadding">
-                    <table class="table">
+                    <table id="crews_table" class="table">
                         <tr>
                             <th>№</th>
                             <th>Статус</th>
-                            <th>Адрес</th>
+                            <th>Номер</th>
                             <th></th>
-                        </tr>
-                        <tr>
-                            <td>1234</td>
-                            <td>Свободен</td>
-                            <td>ул. Улица д.2</td>
-                            <td class="hover-blue text-center"><span class="glyphicon glyphicon-flag"></span></td>
-                        </tr>
-                        <tr class="danger">
-                            <td>1234</td>
-                            <td>Занят</td>
-                            <td>пр. Проспект д.5</td>
-                            <td class="hover-blue text-center"><span class="glyphicon glyphicon-flag"></span></td>
-                        </tr>
-                        <tr>
-                            <td>1234</td>
-                            <td>Свободен</td>
-                            <td>ул. Улица д.2</td>
-                            <td class="hover-blue text-center"><span class="glyphicon glyphicon-flag"></span></td>
-                        </tr>
-                        <tr class="danger">
-                            <td>1234</td>
-                            <td>Занят</td>
-                            <td>пр. Проспект д.5</td>
-                            <td class="hover-blue text-center"><span class="glyphicon glyphicon-flag"></span></td>
-                        </tr>
-                        <tr class="danger">
-                            <td>1234</td>
-                            <td>Занят</td>
-                            <td>пр. Проспект д.5</td>
-                            <td class="hover-blue text-center"><span class="glyphicon glyphicon-flag"></span></td>
                         </tr>
                         <tr>
                             <td>1234</td>

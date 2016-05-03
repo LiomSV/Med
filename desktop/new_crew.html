@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить бригаду</title>
+
+    <script src="rsc/3dparty/jquery-2.1.4.js"></script>
+    <link type="text/css" rel="stylesheet" href="rsc/3dparty/bootstrap.css"/>
+    <script src="rsc/3dparty/bootstrap.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="rsc/css/main.css"/>
+    <script src="rsc/js/conf.js"></script>
+    <script src="rsc/js/main.js"></script>
+    <script src="rsc/js/new_crew.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a id="dc_link" href="index.html">Диспетчерская</a></li>
+                <li><a href="new_call.html">Новый вызов</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="active" href="#">Добавить бригаду</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-xs-10 col-xs-push-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Добавить бригаду
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="type" class="col-sm-4 control-label">Тип</label>
+                                <div class="col-sm-8">
+                                    <input id="type" type="text" class="form-control" placeholder="Тип">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="driver" class="col-sm-4 control-label">Водитель</label>
+                                <div class="col-sm-8">
+                                    <input id="driver" type="text" class="form-control" placeholder="Водитель">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="carNumber" class="col-sm-4 control-label">Номер автомобиля</label>
+                                <div class="col-sm-8">
+                                    <input id="carNumber" type="text" class="form-control" placeholder="Номер автомобиля">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="members" class="col-md-6">
+                            <div class="form-group">
+                                <label for="member1" class="col-sm-4 control-label">Мед работник №1</label>
+                                <div class="col-sm-8">
+                                    <input id="member1" type="text" class="member form-control" placeholder="Мед работник №1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="member2" class="col-sm-4 control-label">Мед работник №2</label>
+                                <div class="col-sm-8">
+                                    <input id="member2" type="text" class="member form-control" placeholder="Мед работник №2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-push-5">
+                            <div id="btnAdd" class="btn btn-primary btn-block" onclick="ncrew.onclickBtnAdd()">Добавить</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="registerNumberPanel" class="row hidden">
+    <div class="col-xs-10 col-xs-push-1">
+        <div class="panel panel-default">
+            <div class="panel-body" style="text-align: center">
+                Введите данный номер в мобильное приложение:<br>
+                <strong><span id="registerNumber">1234</span></strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -11,7 +11,16 @@ var nc = {};
             url: 'http://localhost:8080/rest/call/add',
             method: 'POST',
             data: {
-                address: $('#address').val()
+                firstname: $('#firstname').val(),
+                fathername: $('#fathername').val(),
+                lastname: $('#lastname').val(),
+                phoneNumber: $('#phoneNumber').val(),
+                address: $('#address').val(),
+                reason: $('#reason').val(),
+                comment: $('#comment').val()
+                // TODO add type
+                // TODO add sex
+                // TODO add birthdate
             },
             success: function(response) {
                 if (response == 'ok') {

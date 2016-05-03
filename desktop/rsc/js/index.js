@@ -11,8 +11,8 @@ $(document).ready(function() {
     };
     index.map = new google.maps.Map(mapCanvas, mapOptions);
 
-    index.updateCalls();
-    var updateCallsTimer = setInterval(index.updateCalls, 4000);
+    index.update();
+    var updateCallsTimer = setInterval(index.update, 4000);
 
 });
 
@@ -20,39 +20,50 @@ var index = {};
 
 (function (index){
 
-    index.markerCalls = {};
+    index.callMarkers = {};
+    index.crewMarkers = {};
 
     index.makeAutoHight = function() {
         $('.auto-height').css('height', $(window).height() - 133);
     };
 
+    index.update = function() {
+        index.updateCalls();
+        index.updateCrews();
+    };
+
     index.updateCalls = function() {
         jQuery.ajax({
-            url: 'http://localhost:8080/rest/call/getall',
+            url: conf.endpointPrefix + conf.endpoint.call.list,
             method: 'GET',
             success: function(response) {
                 console.log(response);
-                console.log(index.markerCalls);
+                console.log(index.callMarkers);
+                var counts = {};
+                counts[conf.callType.URGENT] = 0;
+                counts[conf.callType.IMMEDIATE] = 0;
+                counts[conf.callType.EMERGENT] = 0;
                 $('#calls_count').text(response.length);
-                $('#calls_table').empty();
+                $('#calls_table').html(
+                    '<tr>' +
+                        '<th>№</th>' +
+                        '<th>ФИО</th>' +
+                        '<th>Адрес</th>' +
+                        '<th>Причина</th>' +
+                        '<th></th>' +
+                    '</tr>');
                 response.forEach(function(call) {
                     $('#calls_table').append(
-                        '<div class="col-xs-1">' +
-                            '<b>' + call.id + '</b>' +
-                        '</div>' +
-                        '<div class="col-xs-3">' +
-                            '<b>' + call.lastname + '</b>' +
-                        '</div>' +
-                        '<div class="col-xs-4">' +
-                            '<b>' + call.address + '</b>' +
-                        '</div>' +
-                        '<div class="col-xs-2">' +
-                            '<b>' + call.reason + '</b>' +
-                        '</div>' +
-                        '<div class="col-xs-2">' +
-                        '</div>');
-                    if (index.markerCalls[call.location.lat + ':' + call.location.lng] == null) {
-                        index.markerCalls[call.location.lat + ':' + call.location.lng] = new google.maps.Marker({
+                        '<tr>' +
+                            '<td>' + call.id + '</td>' +
+                            '<td>' + call.lastname + '</td>' +
+                            '<td>' + call.address + '</td>' +
+                            '<td>' + call.reason + '</td>' +
+                            '<td></td>' +
+                        '</tr>');
+                    counts[call.type] += 1;
+                    if (index.callMarkers[call.id] == null) {
+                        index.callMarkers[call.id] = new google.maps.Marker({
                             draggable: true,
                             icon: 'rsc/images/people_24_red.png',
                             map: index.map,
@@ -63,8 +74,49 @@ var index = {};
                         });
                     }
                 });
+                $('#urgent_count').text(counts[conf.callType.URGENT]);
+                $('#immediate_count').text(counts[conf.callType.IMMEDIATE]);
+                $('#emergent_count').text(counts[conf.callType.EMERGENT]);
             }
         })
     };
+
+    index.updateCrews = function() {
+        jQuery.ajax({
+            url: conf.endpointPrefix + conf.endpoint.crew.list,
+            method: 'GET',
+            success: function(response) {
+                console.log(response);
+                console.log(index.callMarkers);
+                $('#crews_table').html(
+                    '<tr>' +
+                        '<th>№</th>' +
+                        '<th>Статус</th>' +
+                        '<th>Гос номер</th>' +
+                        '<th></th>' +
+                    '</tr>');
+                response.forEach(function(crew) {
+                    $('#crews_table').append(
+                        '<tr>' +
+                            '<td>' + crew.id + '</td>' +
+                            '<td>' + crew.status + '</td>' +
+                            '<td>' + crew.carNumber + '</td>' +
+                            '<td></td>' +
+                        '</tr>');
+                    if (crew.location && index.crewMarkers[crew.id] == null) {
+                        index.crewMarkers[crew.id] = new google.maps.Marker({
+                            draggable: true,
+                            icon: 'rsc/images/transport_24_red.png',
+                            map: index.map,
+                            position: {
+                                lat: crew.location.lat,
+                                lng: crew.location.lng
+                            }
+                        });
+                    }
+                });
+            }
+        })
+    }
 
 })(index || (index = {}));
