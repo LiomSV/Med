@@ -15,12 +15,23 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fldPrefix"
+            android:text="http://192.168.0.41:8080/" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fldNumber" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Статус: свободен"
-            android:id="@+id/textView" />
+            android:id="@+id/textStatus" />
 
         <TextView
             android:layout_width="match_parent"
@@ -28,6 +39,13 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="координаты: "
             android:id="@+id/textCoord" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Занят"
+            android:id="@+id/btnBusy"
+            android:onClick="onBreak" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -37,24 +55,36 @@
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:text="В пути"
+                android:id="@+id/btnMoving"
+                android:layout_weight="1"
+                android:onClick="onMoving" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="На месте"
+                android:id="@+id/btnTreatment"
+                android:layout_weight="1"
+                android:onClick="onTreatment" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Транспорт."
+                android:id="@+id/btnTransportation"
+                android:layout_weight="1"
+                android:onClick="onTransporting" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:text="Свободен"
-                android:id="@+id/button"
-                android:layout_weight="1" />
+                android:id="@+id/btnFree"
+                android:layout_weight="1"
+                android:onClick="onFree" />
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="На вызове"
-                android:id="@+id/button2"
-                android:layout_weight="1" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Занят"
-                android:id="@+id/button3"
-                android:layout_weight="1" />
         </LinearLayout>
 
         <ScrollView
