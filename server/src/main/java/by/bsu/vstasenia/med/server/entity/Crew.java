@@ -2,30 +2,19 @@ package by.bsu.vstasenia.med.server.entity;
 
 import by.bsu.vstasenia.med.server.model.CrewStatus;
 import by.bsu.vstasenia.med.server.model.CrewType;
-import com.google.maps.model.LatLng;
 
 import java.util.List;
 
-public class Crew {
+public class Crew extends LocationObject {
 
-    private Integer id;
     private CrewStatus status;
     private CrewType type;
     private String driver;
     private List<String> members;
     private String carNumber;
-    private LatLng location;
     private Call call;
 
     public Crew() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public CrewStatus getStatus() {
@@ -68,14 +57,6 @@ public class Crew {
         this.carNumber = carNumber;
     }
 
-    public LatLng getLocation() {
-        return location;
-    }
-
-    public void setLocation(LatLng location) {
-        this.location = location;
-    }
-
     public Call getCall() {
         return call;
     }
@@ -87,13 +68,13 @@ public class Crew {
     @Override
     public String toString() {
         return "Crew{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", status=" + status +
                 ", type=" + type +
                 ", driver='" + driver + '\'' +
                 ", members=" + members +
                 ", carNumber='" + carNumber + '\'' +
-                ", location=" + location +
+                ", location=" + super.getLocation() +
                 ", call=" + call +
                 '}';
     }

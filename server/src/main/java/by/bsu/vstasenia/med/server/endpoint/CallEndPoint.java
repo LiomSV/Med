@@ -6,6 +6,7 @@ import by.bsu.vstasenia.med.server.entity.Crew;
 import by.bsu.vstasenia.med.server.model.CallStatus;
 import by.bsu.vstasenia.med.server.model.CallType;
 import by.bsu.vstasenia.med.server.model.CrewStatus;
+import by.bsu.vstasenia.med.server.service.DistanceService;
 import by.bsu.vstasenia.med.server.service.GeocodeService;
 
 import javax.ws.rs.*;
@@ -29,6 +30,7 @@ public class CallEndPoint extends BasicEndPoint {
         call/restore?id                 POST
         call/list?[type]                GET     $
         сall/history?[offset]&[limit]   GET
+        call/advice_crew                POST
      */
 
     @GET
@@ -113,6 +115,17 @@ public class CallEndPoint extends BasicEndPoint {
     public List<Call> list() {
         addACAO();
         return DataBase.getAllActiveCalls();
+    }
+
+    @POST
+    @Path("/advice_crew")
+    @Produces("application/json")
+    public List<Crew> adviceCrew(@FormParam("callId") int callId) {
+        Call call = DataBase.getCall(callId);
+        if (call == null) {
+            return null;
+        }
+        return DistanceService.findClosestCrews(call, DataBase.getAllCrews());
     }
 
 }

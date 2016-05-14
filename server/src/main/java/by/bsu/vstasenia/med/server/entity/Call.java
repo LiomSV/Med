@@ -3,19 +3,16 @@ package by.bsu.vstasenia.med.server.entity;
 import by.bsu.vstasenia.med.server.model.CallStatus;
 import by.bsu.vstasenia.med.server.model.CallType;
 import by.bsu.vstasenia.med.server.model.Sex;
-import com.google.maps.model.LatLng;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Call {
+public class Call extends LocationObject {
 
-    private Integer id;
     private CallStatus status;
     private CallType type;
     private String initAddress;
     private String address;
-    private LatLng location;
     private String phoneNumber;
     private String firstname;
     private String fathername;
@@ -32,14 +29,6 @@ public class Call {
     private Crew crew;
 
     public Call() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public CallStatus getStatus() {
@@ -72,14 +61,6 @@ public class Call {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public LatLng getLocation() {
-        return location;
-    }
-
-    public void setLocation(LatLng location) {
-        this.location = location;
     }
 
     public String getPhoneNumber() {
@@ -197,12 +178,12 @@ public class Call {
     @Override
     public String toString() {
         return "Call{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", status=" + status +
                 ", type=" + type +
                 ", initAddress='" + initAddress + '\'' +
                 ", address='" + address + '\'' +
-                ", location=" + location +
+                ", location=" + super.getLocation() +
                 ", firstname='" + firstname + '\'' +
                 ", fathername='" + fathername + '\'' +
                 ", lastname='" + lastname + '\'' +
