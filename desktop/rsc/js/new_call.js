@@ -23,9 +23,11 @@ var nc = {};
                 // TODO add birthdate
             },
             success: function(response) {
-                if (response == 'ok') {
+                if (response != 'error') {
                     console.log(response);
-                    $('#dc_link').get(0).click();
+                    var assignLink = $('#assign_link');
+                    assignLink.attr('href', assignLink.attr('href') + '?id=' + response);
+                    assignLink.get(0).click();
                 }
             }
         });

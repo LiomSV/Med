@@ -26,7 +26,7 @@ public class Call extends LocationObject {
     private LocalDateTime treatmentStartedAt;
     private LocalDateTime transportationStartedAt;
     private LocalDateTime finishedAt;
-    private Crew crew;
+    private Integer crewId;
 
     public Call() {
     }
@@ -167,12 +167,12 @@ public class Call extends LocationObject {
         this.finishedAt = finishedAt;
     }
 
-    public Crew getCrew() {
-        return crew;
+    public Integer getCrewId() {
+        return crewId;
     }
 
-    public void setCrew(Crew crew) {
-        this.crew = crew;
+    public void setCrewId(Integer crewId) {
+        this.crewId = crewId;
     }
 
     @Override
@@ -196,7 +196,7 @@ public class Call extends LocationObject {
                 ", treatmentStartedAt=" + treatmentStartedAt +
                 ", transportationStartedAt=" + transportationStartedAt +
                 ", finishedAt=" + finishedAt +
-                ", crew=" + crew +
+                ", crewId=" + crewId +
                 '}';
     }
 }

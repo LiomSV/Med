@@ -8,10 +8,11 @@ var conf = {};
 
     conf.endpoint = {
         call: {
-            get:        "/call",
-            add:        "/call/add",
-            assign:     "/call/assign",
-            list:       "/call/list"
+            get:            "/call",
+            add:            "/call/add",
+            assign:         "/call/assign",
+            list:           "/call/list",
+            advice_crew:    "/call/advice_crew"
         },
         crew: {
             add:            "/crew/add",

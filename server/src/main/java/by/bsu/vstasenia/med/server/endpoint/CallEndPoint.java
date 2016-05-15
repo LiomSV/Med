@@ -6,6 +6,7 @@ import by.bsu.vstasenia.med.server.entity.Crew;
 import by.bsu.vstasenia.med.server.model.CallStatus;
 import by.bsu.vstasenia.med.server.model.CallType;
 import by.bsu.vstasenia.med.server.model.CrewStatus;
+import by.bsu.vstasenia.med.server.model.DistanceToObject;
 import by.bsu.vstasenia.med.server.service.DistanceService;
 import by.bsu.vstasenia.med.server.service.GeocodeService;
 
@@ -79,7 +80,7 @@ public class CallEndPoint extends BasicEndPoint {
             call.setLocation(addLoc.getLocation());
         }
         DataBase.addCall(call);
-        return OK;
+        return call.getId().toString();
     }
 
     @POST
@@ -93,18 +94,20 @@ public class CallEndPoint extends BasicEndPoint {
 
         call.setStatus(CallStatus.MOVING_TO);
         call.setMovingStartedAt(LocalDateTime.now());
-        if (call.getCrew() != null) {
-            call.getCrew().setStatus(CrewStatus.FREE);
-            call.getCrew().setCall(null);
+        if (call.getCrewId() != null) {
+            Crew replacedCrew = DataBase.getCrew(call.getCrewId());
+            replacedCrew.setStatus(CrewStatus.FREE);
+            replacedCrew.setCallId(null);
         }
-        call.setCrew(crew);
+        call.setCrewId(crew.getId());
 
         crew.setStatus(CrewStatus.MOVING);
-        if (crew.getCall() != null) {
-            crew.getCall().setStatus(CallStatus.AWAITING);
-            crew.getCall().setCrew(null);
+        if (crew.getCallId() != null) {
+            Call replacedCall = DataBase.getCall(crew.getCallId());
+            replacedCall.setStatus(CallStatus.AWAITING);
+            replacedCall.setCrewId(null);
         }
-        crew.setCall(call);
+        crew.setCallId(call.getId());
 
         return OK;
     }
@@ -120,12 +123,13 @@ public class CallEndPoint extends BasicEndPoint {
     @POST
     @Path("/advice_crew")
     @Produces("application/json")
-    public List<Crew> adviceCrew(@FormParam("callId") int callId) {
+    public List<DistanceToObject<Crew>> adviceCrew(@FormParam("callId") int callId) {
+        addACAO();
         Call call = DataBase.getCall(callId);
         if (call == null) {
             return null;
         }
-        return DistanceService.findClosestCrews(call, DataBase.getAllCrews());
+        return DistanceService.findClosestCrews(call, DataBase.getAllFreeCrews());
     }
 
 }

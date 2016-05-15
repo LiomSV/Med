@@ -12,7 +12,7 @@ public class Crew extends LocationObject {
     private String driver;
     private List<String> members;
     private String carNumber;
-    private Call call;
+    private Integer callId;
 
     public Crew() {
     }
@@ -57,12 +57,12 @@ public class Crew extends LocationObject {
         this.carNumber = carNumber;
     }
 
-    public Call getCall() {
-        return call;
+    public Integer getCallId() {
+        return callId;
     }
 
-    public void setCall(Call call) {
-        this.call = call;
+    public void setCallId(Integer callId) {
+        this.callId = callId;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Crew extends LocationObject {
                 ", members=" + members +
                 ", carNumber='" + carNumber + '\'' +
                 ", location=" + super.getLocation() +
-                ", call=" + call +
+                ", callId=" + callId +
                 '}';
     }
 }

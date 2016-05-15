@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Диспетчерская</title>
+
+    <link type="text/css" rel="stylesheet" href="rsc/3dparty/bootstrap.css"/>
+    <script src="rsc/3dparty/bootstrap.js"></script>
+    <script src="rsc/3dparty/jquery-2.1.4.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_Sc0dGO6oDWND1FwMMI1RTDexCq8ULbk&language=ru"></script>
+
+    <link type="text/css" rel="stylesheet" href="rsc/css/main.css"/>
+    <script src="rsc/js/conf.js"></script>
+    <script src="rsc/js/main.js"></script>
+    <script src="rsc/js/assign_call.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a id="dc_link" href="index.html">Диспетчерская</a></li>
+                    <li><a href="new_call.html">Новый вызов</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="new_crew.html">Добавить бригаду</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="row main-row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <span class="col-xs-12">
+                            <b>Вызов №<span id="id">123</span></b>
+                        </span>
+                        <span class="col-md-12">
+                            <b>Адрес:</b> <span id="address"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Статус:</b> <span id="status"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Тип:</b> <span id="type"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Тел.:</b> <span id="phoneNumber"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Фамилия:</b> <span id="lastname"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Имя:</b> <span id="firstname"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Отчество:</b> <span id="fathername"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Пол:</b> <span id="sex"></span>
+                        </span>
+                        <span class="col-md-4">
+                            <b>Д. р.:</b> <span id="birthDate"></span>
+                        </span>
+                        <span class="col-md-12">
+                            <b>Причина:</b> <span id="reason"></span>
+                        </span>
+                        <span class="col-md-12">
+                            <b>Комментарии:</b> <span id="comment"></span>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Бригады
+                </div>
+                <div class="panel-body scroll-y nopadding">
+                    <table id="crews_table" class="table">
+                        <tr>
+                            <th>№</th>
+                            <th>Статус</th>
+                            <th>Номер</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>1234</td>
+                            <td>Свободен</td>
+                            <td>ул. Улица д.2</td>
+                            <td class="hover-blue text-center"><span class="glyphicon glyphicon-flag"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Карта
+                </div>
+                <div class="panel-body auto-height nopadding" style=" height: 500px">
+                    <div id="map" class="map"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 col-xs-push-5">
+            <div id="btnAssign" class="btn btn-primary btn-block" onclick="acall.onclickBtnAssign()">Назначить</div>
+        </div>
+    </div>
+
+</body>
+</html>

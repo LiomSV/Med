@@ -4,6 +4,7 @@ import by.bsu.vstasenia.med.server.Const;
 import by.bsu.vstasenia.med.server.entity.Call;
 import by.bsu.vstasenia.med.server.entity.Crew;
 import by.bsu.vstasenia.med.server.entity.LocationObject;
+import by.bsu.vstasenia.med.server.model.DistanceToObject;
 import com.google.maps.DistanceMatrixApi;
 import com.google.maps.GeoApiContext;
 import com.google.maps.model.*;
@@ -15,7 +16,7 @@ public class DistanceService {
 
     private static final GeoApiContext context = new GeoApiContext().setApiKey(Const.GOOGLE_API_KEY);
 
-    public static List<Crew> findClosestCrews(Call origin, List<Crew> destinations) {
+    public static List<DistanceToObject<Crew>> findClosestCrews(Call origin, List<Crew> destinations) {
         LatLng[] destLocations = new LatLng[destinations.size()];
         int i = 0;
         for (LocationObject destination : destinations) {
@@ -27,17 +28,11 @@ public class DistanceService {
                 throw new IllegalStateException("One origin, but rows.length != 1");
             }
             DistanceMatrixElement[] elements = distanceMatrix.rows[0].elements;
-            List<IndexMeters> sortList = new ArrayList<>();
+            List<DistanceToObject<Crew>> result = new ArrayList<>();
             for (i = 0; i < elements.length; i++) {
-                sortList.add(new IndexMeters(i, elements[i].distance.inMeters));
+                result.add(new DistanceToObject<>(elements[i].distance.inMeters, destinations.get(i)));
             }
-            sortList.sort((o1, o2) -> (o1.meters - o2.meters) == 0 ? o1.index - o2.index : Long.compare(o1.meters, o2.meters));
-
-            List<Crew> result = new ArrayList<>();
-            for (IndexMeters im : sortList) {
-                result.add(destinations.get(im.index));
-            }
-
+            result.sort((o1, o2) -> (o1.getMeters() - o2.getMeters()) == 0 ? o1.getObject().getId() - o2.getObject().getId() : Long.compare(o1.getMeters(), o2.getMeters()));
             return result;
         } catch (Exception e) {
             e.printStackTrace();
