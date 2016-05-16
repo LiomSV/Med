@@ -2,6 +2,21 @@
 
 /* end of override Bootstrap styles */
 
+/* login.html */
+
+.login-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 350px;
+    height: 200px;
+    margin: auto;
+}
+
+/* end of login.html */
+
 .main-row {
     margin: 10px 0;
 }
@@ -35,4 +50,37 @@
 
 .nomargin {
     margin: 0;
+}
+
+tr.call-list-item, tr.crew-list-item {
+    cursor: default;
+}
+
+tr.call-list-item:hover, tr.crew-list-item:hover {
+    background-color: #a3cff1;
+}
+
+tr.call-list-item.selected, tr.crew-list-item.selected {
+    background-color: #66afe9;
+}
+
+tr.call-list-item.selected:hover, tr.crew-list-item.selected:hover {
+    background-color: #84bfed;
+}
+
+.to-details {
+    color: #2e6da4;
+    cursor: pointer;
+}
+
+.to-details:hover {
+    color: #333;
+}
+
+.no-link {
+    color: #333;
+}
+
+.no-link:hover {
+    text-decoration: none;
 }

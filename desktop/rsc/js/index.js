@@ -26,6 +26,8 @@ var index = {};
     index.selectedCrewId = -1;
     index.hoveredCallId = -1;
     index.hoveredCrewId = -1;
+    index.selectedCallListItem = null;
+    index.selectedCrewListItem = null;
     index.hoveredCallIcon = null;
     index.hoveredCrewIcon = null;
 
@@ -60,12 +62,16 @@ var index = {};
                     '</tr>');
                 response.forEach(function(call) {
                     $('#calls_table').append(
-                        '<tr>' +
+                        '<tr class="call-list-item' + (call.id == index.selectedCallId ? ' selected' : '') + '">' +
                             '<td>' + call.id + '</td>' +
-                            '<td>' + call.lastname + '</td>' +
+                            '<td>' + (call.lastname || call.firstname || call.fathername) + '</td>' +
                             '<td>' + call.address + '</td>' +
                             '<td>' + call.reason + '</td>' +
-                            '<td><span class="glyphicon glyphicon-list-alt"></span></td>' +
+                            '<td>' +
+                                '<span class="to-details pull-right glyphicon glyphicon-list-alt"></span>' +
+                                (call.type == conf.callType.EMERGENT ? '<span class="pull-right glyphicon glyphicon-star" style="margin-right: 7px"></span>' : '') +
+                                (call.type == conf.callType.IMMEDIATE ? '<span class="pull-right glyphicon glyphicon-star-empty" style="margin-right: 7px"></span>' : '') +
+                            '</td>' +
                         '</tr>');
                     counts[call.type] += 1;
                     if (index.callMarkers[call.id] == null) {
@@ -110,12 +116,12 @@ var index = {};
                         members += d;
                     });
                     $('#crews_table').append(
-                        '<tr class="crew-list-item">' +
+                        '<tr class="crew-list-item' + (crew.id == index.selectedCrewId ? ' selected' : '') + '">' +
                             '<td class="id">' + crew.id + '</td>' +
                             '<td>' + main.crewStatusString[crew.status] + '</td>' +
                             '<td>' + crew.driver + '</td>' +
                             '<td>' + members + '</td>' +
-                            '<td><span class="glyphicon glyphicon-list-alt"></span></td>' +
+                            '<td class="to-details"><span class="glyphicon glyphicon-list-alt"></span></td>' +
                         '</tr>');
                     if (crew.location && index.crewMarkers[crew.id] == null) {
                         index.crewMarkers[crew.id] = new google.maps.Marker({
@@ -163,7 +169,6 @@ var index = {};
     index.onmouseleaveCrewList = function(e) {
         console.log('onmouseleaveCrewList');
         var tr = $(e.currentTarget);
-        tr.removeClass('success');
         var crewId = tr.find('.id').text();
         if (crewId != index.selectedCrewId) {
             index.hoveredCrewId = -1;
@@ -174,7 +179,6 @@ var index = {};
     index.onmouseenterCrewList = function(e) {
         console.log('onmouseenterCrewList');
         var tr = $(e.currentTarget);
-        tr.addClass('success');
         var crewId = tr.find('.id').text();
         if (crewId != index.selectedCrewId) {
             index.hoveredCrewId = crewId;
@@ -185,12 +189,15 @@ var index = {};
 
     index.onclickCrewList = function(e) {
         console.log('onclickCrewList');
+        $('#crews_table').find('.selected').removeClass('selected');
         index.clearMarkerSelection();
-        var crewId = $(e.currentTarget).find('.id').text();
+        var crewListItem = $(e.currentTarget);
+        var crewId = crewListItem.find('.id').text();
         if (crewId != index.selectedCrewId) {
             index.selectedCrewId = crewId;
             index.crewMarkers[crewId].setIcon('rsc/images/transport_32_blue.png');
             index.hoveredCrewIcon = index.crewMarkers[crewId].getIcon();
+            crewListItem.addClass('selected');
         } else {
             index.selectedCrewId = -1;
             index.hoveredCrewIcon = null;

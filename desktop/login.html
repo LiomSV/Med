@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+
+    <link type="text/css" rel="stylesheet" href="rsc/3dparty/bootstrap.css"/>
+    <script src="rsc/3dparty/bootstrap.js"></script>
+    <script src="rsc/3dparty/jquery-2.1.4.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="rsc/css/main.css"/>
+    <script src="rsc/js/conf.js"></script>
+    <script src="rsc/js/main.js"></script>
+    <script src="rsc/js/login.js"></script>
+
+</head>
+<body>
+
+    <div class="panel panel-default login-panel">
+        <div class="panel-heading">
+             Вход
+            <span class="error hidden pull-right" style="color:rgb(169, 68, 66)">Неверный логин/пароль</span>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        <input type="text" class="form-control" id="fldLogin" placeholder="Логин">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                        <input type="password" class="form-control" id="fldPassword" placeholder="Пароль">
+                    </div>
+                </div>
+                <div class="btn btn-primary btn-block" onclick="login.enter()">Войти</div>
+                <a id="enter_link" class="hidden" href="index.html"></a>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
