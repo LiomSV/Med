@@ -27,8 +27,11 @@ var acall = {};
 
 (function (acall){
 
-    acall.crewId = 0;
     acall.callId = 0;
+    acall.selectedCrewId = 0;
+    acall.crewMarkers = {};
+    acall.hoveredCrewId = -1;
+    acall.hoveredCrewIcon = null;
 
     acall.makeAutoHight = function() {
         $('.auto-height').css('height', $(window).height() - 183);
@@ -102,17 +105,17 @@ var acall = {};
                         members += d;
                     });
                     $('#crews_table').append(
-                        '<tr' + (i == 0 ? ' class="success"' : '') + '>' +
-                            '<td>' + crew.id + '</td>' +
+                        '<tr class="crew-list-item' + (i == acall.selectedCrewId ? ' selected' : '') + '">' +
+                            '<td class="id">' + crew.id + '</td>' +
                             '<td>' + main.crewTypeString[crew.type] + '</td>' +
                             '<td>' + members + '</td>' +
                             '<td>' + (distance.meters / 1000 )+ ' км</td>' +
                             '<td></td>' +
                         '</tr>');
 
-                    new google.maps.Marker({
+                    acall.crewMarkers[crew.id] = new google.maps.Marker({
                         draggable: true,
-                        icon: i == 0 ? 'rsc/images/transport_32_red.png' : 'rsc/images/transport_24_red.png',
+                        icon: i == acall.selectedCrewId ? 'rsc/images/transport_32_black.png' : 'rsc/images/transport_24_red.png',
                         map: acall.map,
                         position: {
                             lat: crew.location.lat,
@@ -120,6 +123,12 @@ var acall = {};
                         }
                     });
                 });
+
+                var crewListItem = $('.crew-list-item');
+                crewListItem.off()
+                    .on('click', acall.onclickCrewList)
+                    .on('mouseenter', acall.onmouseenterCrewList)
+                    .on('mouseleave', acall.onmouseleaveCrewList);
             }
         });
     };
@@ -130,7 +139,7 @@ var acall = {};
             method: 'POST',
             data: {
                 callId: acall.callId,
-                crewId: acall.crewId
+                crewId: acall.selectedCrewId
             },
             success: function (response) {
                 if (response == 'ok') {
@@ -139,6 +148,50 @@ var acall = {};
                 }
             }
         })
+    };
+
+    acall.clearMarkerSelection = function() {
+        var selectedCrewMarker = acall.crewMarkers[acall.selectedCrewId];
+        if (selectedCrewMarker) {
+            selectedCrewMarker.setIcon('rsc/images/transport_24_red.png');
+        }
+    };
+
+    acall.clearListSelection = function() {
+        $('#crews_table').find('.selected').removeClass('selected');
+    };
+    acall.selectCrewOnMap = function(crewId) {
+        acall.selectedCrewId = crewId;
+        acall.crewMarkers[crewId].setIcon('rsc/images/transport_32_black.png');
+        acall.hoveredCrewIcon = acall.crewMarkers[crewId].getIcon();
+    };
+
+    acall.onmouseleaveCrewList = function(e) {
+        console.log('onmouseleaveCrewList');
+        var crewId = $(this).find('.id').text();
+        if (crewId != acall.selectedCrewId) {
+            acall.hoveredCrewId = -1;
+            acall.crewMarkers[crewId].setIcon('rsc/images/transport_24_red.png');
+        }
+    };
+
+    acall.onmouseenterCrewList = function(e) {
+        console.log('onmouseenterCrewList');
+        var crewId = $(this).find('.id').text();
+        if (crewId != acall.selectedCrewId) {
+            acall.hoveredCrewId = crewId;
+            acall.hoveredCrewIcon = acall.crewMarkers[crewId].getIcon();
+            acall.crewMarkers[crewId].setIcon('rsc/images/transport_24_black.png');
+        }
+    };
+
+    acall.onclickCrewList = function(e) {
+        acall.clearListSelection();
+        acall.clearMarkerSelection();
+        var crewListItem = $(this);
+        var crewId = crewListItem.find('.id').text();
+        crewListItem.addClass('selected');
+        acall.selectCrewOnMap(crewId);
     };
 
 })(acall || (acall = {}));

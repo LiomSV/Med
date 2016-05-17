@@ -132,9 +132,9 @@ public class DataBase {
         Call call = new Call();
         call.setStatus(CallStatus.AWAITING);
         call.setType(CallType.URGENT);
-        call.setInitAddress("Ольшевского 17 Минск");
-        call.setAddress("ул. Ольшевского 17, Минск, Беларусь");
-        call.setLocation(new LatLng(53.9141041, 27.5024981));
+        call.setInitAddress("Чигладзе 10 Минск");
+        call.setAddress("ул. Чигладзе 10, Минск, Беларусь");
+        call.setLocation(new LatLng(53.9258279, 27.4991843));
         call.setPhoneNumber("+375 21 489 0847");
         call.setFirstname("Иван");
         call.setFathername("Сидорович");

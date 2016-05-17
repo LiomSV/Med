@@ -20,14 +20,15 @@ var index = {};
 
 (function (index){
 
+    index.crews = [];
+    index.calls = [];
+
     index.callMarkers = {};
     index.crewMarkers = {};
     index.selectedCallId = -1;
     index.selectedCrewId = -1;
     index.hoveredCallId = -1;
     index.hoveredCrewId = -1;
-    index.selectedCallListItem = null;
-    index.selectedCrewListItem = null;
     index.hoveredCallIcon = null;
     index.hoveredCrewIcon = null;
 
@@ -45,8 +46,6 @@ var index = {};
             url: conf.endpointPrefix + conf.endpoint.call.list,
             method: 'GET',
             success: function(response) {
-                console.log(response);
-                console.log(index.callMarkers);
                 var counts = {};
                 counts[conf.callType.URGENT] = 0;
                 counts[conf.callType.IMMEDIATE] = 0;
@@ -61,9 +60,10 @@ var index = {};
                         '<th></th>' +
                     '</tr>');
                 response.forEach(function(call) {
+                    index.calls[call.id] = call;
                     $('#calls_table').append(
                         '<tr class="call-list-item' + (call.id == index.selectedCallId ? ' selected' : '') + '">' +
-                            '<td>' + call.id + '</td>' +
+                            '<td class="id">' + call.id + '</td>' +
                             '<td>' + (call.lastname || call.firstname || call.fathername) + '</td>' +
                             '<td>' + call.address + '</td>' +
                             '<td>' + call.reason + '</td>' +
@@ -76,7 +76,6 @@ var index = {};
                     counts[call.type] += 1;
                     if (index.callMarkers[call.id] == null) {
                         index.callMarkers[call.id] = new google.maps.Marker({
-                            draggable: true,
                             icon: 'rsc/images/people_24_red.png',
                             map: index.map,
                             position: {
@@ -86,6 +85,13 @@ var index = {};
                         });
                     }
                 });
+
+                var callListItem = $('.call-list-item');
+                callListItem.off()
+                    .on('click', index.onclickCallList)
+                    .on('mouseenter', index.onmouseenterCallList)
+                    .on('mouseleave', index.onmouseleaveCallList);
+
                 $('#urgent_count').text(counts[conf.callType.URGENT]);
                 $('#immediate_count').text(counts[conf.callType.IMMEDIATE]);
                 $('#emergent_count').text(counts[conf.callType.EMERGENT]);
@@ -98,8 +104,6 @@ var index = {};
             url: conf.endpointPrefix + conf.endpoint.crew.list,
             method: 'GET',
             success: function(response) {
-                console.log(response);
-                console.log(index.callMarkers);
                 $('#crews_table').html(
                     '<tr>' +
                         '<th>№</th>' +
@@ -109,6 +113,7 @@ var index = {};
                         '<th></th>' +
                     '</tr>');
                 response.forEach(function(crew) {
+                    index.crews[crew.id] = crew;
                     var members = '';
                     crew.members.forEach(function(d) {
                         if (members.length > 0)
@@ -125,7 +130,6 @@ var index = {};
                         '</tr>');
                     if (crew.location && index.crewMarkers[crew.id] == null) {
                         index.crewMarkers[crew.id] = new google.maps.Marker({
-                            draggable: true,
                             icon: 'rsc/images/transport_24_red.png',
                             map: index.map,
                             position: {
@@ -137,9 +141,10 @@ var index = {};
                 });
 
                 var crewListItem = $('.crew-list-item');
-                crewListItem.click(index.onclickCrewList);
-                crewListItem.mouseenter(index.onmouseenterCrewList);
-                crewListItem.mouseleave(index.onmouseleaveCrewList);
+                crewListItem.off()
+                    .on('click', index.onclickCrewList)
+                    .on('mouseenter' ,index.onmouseenterCrewList)
+                    .on('mouseleave' ,index.onmouseleaveCrewList);
             }
         })
     };
@@ -155,21 +160,75 @@ var index = {};
         }
     };
 
-    index.clearMarkerHover = function() {
-        var hoveredCallMarker = index.callMarkers[index.hoveredCallId];
-        if (hoveredCallMarker) {
-            hoveredCallMarker.setIcon(index.hoveredCallIcon || 'rsc/images/people_24_red.png');
+    index.clearListSelection = function() {
+        $('#calls_table').find('.selected').removeClass('selected');
+        $('#crews_table').find('.selected').removeClass('selected');
+    };
+
+    index.selectCallOnMap = function(callId) {
+        console.log(callId);
+        console.log(index.selectedCallId);
+        if (callId != index.selectedCallId) {
+            index.selectedCallId = callId;
+            index.callMarkers[callId].setIcon('rsc/images/people_32_black.png');
+            index.hoveredCallIcon = index.callMarkers[callId].getIcon();
+        } else {
+            index.selectedCallId = -1;
+            index.hoveredCallIcon = null;
+            index.callMarkers[callId].setIcon('rsc/images/people_24_red.png');
         }
-        var hoveredCrewMarker = index.crewMarkers[index.hoveredCrewId];
-        if (hoveredCrewMarker) {
-            hoveredCrewMarker.setIcon(index.hoveredCrewIcon || 'rsc/images/transport_24_red.png');
+    };
+
+    index.selectCrewOnMap = function(crewId) {
+        if (crewId != index.selectedCrewId) {
+            index.selectedCrewId = crewId;
+            index.crewMarkers[crewId].setIcon('rsc/images/transport_32_black.png');
+            index.hoveredCrewIcon = index.crewMarkers[crewId].getIcon();
+
+        } else {
+            index.selectedCrewId = -1;
+            index.hoveredCrewIcon = null;
+            index.crewMarkers[crewId].setIcon('rsc/images/transport_24_red.png');
+        }
+    };
+
+    index.onmouseleaveCallList = function(e) {
+        console.log('onmouseleaveCallList');
+        var callId = $(this).find('.id').text();
+        if (callId != index.selectedCallId) {
+            index.hoveredCallId = -1;
+            index.callMarkers[callId].setIcon('rsc/images/people_24_red.png');
+        }
+    };
+
+    index.onmouseenterCallList = function(e) {
+        console.log('onmouseenterCallList');
+        var callId = $(this).find('.id').text();
+        if (callId != index.selectedCallId) {
+            index.hoveredCallId = callId;
+            index.hoveredCallIcon = index.callMarkers[callId].getIcon();
+            index.callMarkers[callId].setIcon('rsc/images/people_24_black.png');
+        }
+    };
+
+    index.onclickCallList = function(e) {
+        console.log('onclickCallList');
+        index.clearListSelection();
+        index.clearMarkerSelection();
+        var callListItem = $(this);
+        var callId = callListItem.find('.id').text();
+        if (callId != index.selectedCallId) {
+            callListItem.addClass('selected');
+        }
+        index.selectCallOnMap(callId);
+        if (index.calls[callId].crewId != null) {
+            index.selectCrewOnMap(index.calls[callId].crewId);
         }
     };
 
     index.onmouseleaveCrewList = function(e) {
         console.log('onmouseleaveCrewList');
-        var tr = $(e.currentTarget);
-        var crewId = tr.find('.id').text();
+        var crewId = $(this).find('.id').text();
         if (crewId != index.selectedCrewId) {
             index.hoveredCrewId = -1;
             index.crewMarkers[crewId].setIcon('rsc/images/transport_24_red.png');
@@ -178,31 +237,27 @@ var index = {};
 
     index.onmouseenterCrewList = function(e) {
         console.log('onmouseenterCrewList');
-        var tr = $(e.currentTarget);
-        var crewId = tr.find('.id').text();
+        var crewId = $(this).find('.id').text();
         if (crewId != index.selectedCrewId) {
             index.hoveredCrewId = crewId;
             index.hoveredCrewIcon = index.crewMarkers[crewId].getIcon();
-            index.crewMarkers[crewId].setIcon('rsc/images/transport_24_blue.png');
+            index.crewMarkers[crewId].setIcon('rsc/images/transport_24_black.png');
         }
     };
 
     index.onclickCrewList = function(e) {
-        console.log('onclickCrewList');
-        $('#crews_table').find('.selected').removeClass('selected');
+        index.clearListSelection();
         index.clearMarkerSelection();
-        var crewListItem = $(e.currentTarget);
+        var crewListItem = $(this);
         var crewId = crewListItem.find('.id').text();
+        console.log(index.crews[crewId]);
         if (crewId != index.selectedCrewId) {
-            index.selectedCrewId = crewId;
-            index.crewMarkers[crewId].setIcon('rsc/images/transport_32_blue.png');
-            index.hoveredCrewIcon = index.crewMarkers[crewId].getIcon();
             crewListItem.addClass('selected');
-        } else {
-            index.selectedCrewId = -1;
-            index.hoveredCrewIcon = null;
-            index.crewMarkers[crewId].setIcon('rsc/images/transport_24_blue.png');
         }
-    }
+        index.selectCrewOnMap(crewId);
+        if (index.crews[crewId].callId != null) {
+            index.selectCallOnMap(index.crews[crewId].callId);
+        }
+    };
 
 })(index || (index = {}));
